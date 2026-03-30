@@ -123,7 +123,7 @@ From actual training logs (diffuqwen-hf-20260127-013517):
 | Loss at step 10,000 | 2.51 |
 | Final loss (step 20,000) | 1.50 |
 | Anneal completion | Step 10,000 (progress = 1.0) |
-| Training infrastructure | 4× NVIDIA H100 (80GB) |
+| Training infrastructure | 4× NVIDIA A100 (80GB) |
 
 ---
 
