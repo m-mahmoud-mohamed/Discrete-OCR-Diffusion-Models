@@ -71,7 +71,7 @@ Adapt a pretrained autoregressive VLM (**Qwen2.5-VL-7B** via olmOCR) into a disc
 | Trainable Parameters | ~20M (0.24% of 8.3B total) |
 | Training Data | 267,962 documents (olmOCR training mix) |
 | Training Steps | 20,000 (loss: 109.8 → 1.5) |
-| GPUs | 4× NVIDIA H100 |
+| GPUs | 4× NVIDIA A100 |
 
 **Three pillars of adaptation from DiffuLLaMA:**
 1. **Attention Mask Annealing** — gradual causal → bidirectional transition over 10,000 steps
