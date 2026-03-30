@@ -1,17 +1,17 @@
 #!/bin/bash
 ################## PATHS ##################
-cd /mnt/lustre-grete/projects/nii00224/mahmoud/Lavida-experiment/LaViDa
+cd "$(dirname "$0")/../../../.."
 
 # Base Model & Vision Encoder
-LLADA_8B_INSTRUCT="/mnt/lustre-grete/projects/nii00224/mahmoud/Lavida-experiment/LaViDa/lavida-ckpts/lavida-llada-hd"
-VISION_MODEL_VERSION="/mnt/lustre-grete/projects/nii00224/mahmoud/Lavida-experiment/LaViDa/lavida-ckpts/google-siglip-so400m-patch14-384"
+LLADA_8B_INSTRUCT="/path/to/lavida-ckpts/lavida-llada-hd"
+VISION_MODEL_VERSION="/path/to/lavida-ckpts/google-siglip-so400m-patch14-384"
 
 # Data paths
-DATA_PATH="/mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa/Lavida_dataset/data/olmocr/olmocr_train_final.json"
-IMG_PATH="/mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa/Lavida_dataset"
+DATA_PATH="/path/to/lavida-dataset/data/olmocr/olmocr_train_final.json"
+IMG_PATH="/path/to/lavida-dataset"
 
 # Output and checkpoint paths
-OUTPUT_ROOT="/mnt/lustre-grete/projects/nii00224/mahmoud/Lavida-experiment/LaViDa/checkpoints"
+OUTPUT_ROOT="/path/to/output-checkpoints"
 CHECKPOINT_DIR="${OUTPUT_ROOT}/lavida-stage2-olmocr-opt-nopool"
 
 ################## CONFIG ##################

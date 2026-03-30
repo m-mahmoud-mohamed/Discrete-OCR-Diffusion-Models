@@ -30,7 +30,7 @@ prompt_question = conv.get_prompt()
 print(prompt_question)
 vision_kwargs = None
 vision_kwargs = dict(
-    mm_vision_tower="/mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa/lavida-ckpts/google-siglip-so400m-patch14-384",
+    mm_vision_tower="/path/to/google-siglip-so400m-patch14-384",
     mm_resampler_type=None,
     mm_projector_type='mlp2x_gelu',
     mm_hidden_size=1152,
@@ -43,7 +43,7 @@ model.tie_weights()
 model.to(torch.bfloat16)
 
 
-image = Image.open('/mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa/data/olmocr/images/ct-put-2024-03-16-18-40-34-c9a556cb-f08b-46f1-aaaf-6207e0e26f38-169.png').convert('RGB')
+image = Image.open('/path/to/your/test_image.png').convert('RGB')
 image_tensor = process_images([image], image_processor, model.config)
 image_tensor = [_image.to(dtype=torch.bfloat16, device=device) for _image in image_tensor]
 

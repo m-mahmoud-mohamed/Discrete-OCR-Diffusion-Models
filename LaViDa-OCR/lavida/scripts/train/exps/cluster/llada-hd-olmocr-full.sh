@@ -1,15 +1,15 @@
 #!/bin/bash
 ################## PATHS ##################
-cd /mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa
+cd "$(dirname "$0")/../../../.."
 
 # Base Model & Vision Encoder
-LLADA_8B_INSTRUCT="/mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa/lavida-ckpts/lavida-llada-hd"
-VISION_MODEL_VERSION="/mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa/lavida-ckpts/google-siglip-so400m-patch14-384"
+LLADA_8B_INSTRUCT="/path/to/lavida-ckpts/lavida-llada-hd"
+VISION_MODEL_VERSION="/path/to/lavida-ckpts/google-siglip-so400m-patch14-384"
 
-DATA_PATH="/mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa/Lavida_dataset/data/olmocr/olmocr_train_final.json"
-IMG_PATH="/mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa/Lavida_dataset"
+DATA_PATH="/path/to/lavida-dataset/data/olmocr/olmocr_train_final.json"
+IMG_PATH="/path/to/lavida-dataset"
 
-OUTPUT_ROOT="/mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa/checkpoints"
+OUTPUT_ROOT="/path/to/output-checkpoints"
 
 ################## CONFIG ##################
 
@@ -73,4 +73,4 @@ torchrun --nproc_per_node="${NUM_GPUS}" --master_port="${PORT}" \
     --resume_from_checkpoint "latest" \
     --lmms_eval_generate_tasks "" \
     --lr_scheduler_kwargs '{"min_lr_rate":0.1}' \
-    --pretrain_mm_mlp_adapter "/mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa/checkpoints/lavida-stage2-olmocr-qwen2vlmerger-projector-only-finetune/checkpoint-500/mm_projector.bin" 
+    --pretrain_mm_mlp_adapter "/path/to/output-checkpoints/lavida-stage2-olmocr-qwen2vlmerger-projector-only-finetune/checkpoint-500/mm_projector.bin" 

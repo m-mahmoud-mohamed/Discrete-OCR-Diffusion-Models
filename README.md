@@ -139,6 +139,24 @@ Discrete-OCR-Diffusion-Models/
 │   ├── run_benchmark.py               # olmOCR-bench evaluation
 │   └── requirements.txt
 ├── LaViDa-OCR/                        # Experiment 1: Diffusion from Scratch
+│   ├── lavida/                        # Full LaViDa framework (forked)
+│   │   ├── llava/                     # Core vision-language model library
+│   │   │   ├── model/                 # Model definitions
+│   │   │   │   ├── language_model/    # LLaDA, DREAM, LLaMA backends
+│   │   │   │   ├── multimodal_encoder/# SigLIP, EVA-CLIP, MLCD encoders
+│   │   │   │   ├── multimodal_projector/ # MLP projector
+│   │   │   │   └── multimodal_resampler/ # Pooling, perceiver, etc.
+│   │   │   ├── train/                 # Training pipeline
+│   │   │   │   ├── train.py           # Main training script (DeepSpeed)
+│   │   │   │   └── llava_trainer.py   # Custom HF Trainer for LaViDa
+│   │   │   ├── conversation.py        # Chat templates (llada, dream, etc.)
+│   │   │   ├── mm_utils.py            # Multimodal utilities
+│   │   │   └── constants.py           # Token constants
+│   │   ├── scripts/                   # DeepSpeed configs + training recipes
+│   │   │   └── train/exps/cluster/    # SLURM training scripts
+│   │   ├── predict_ocr.py             # Single-GPU batch OCR (original)
+│   │   ├── predict_ocr_si.py          # Single-image inference (original)
+│   │   └── pyproject.toml             # Package definition
 │   ├── data_preparation/              # olmOCR → LaViDa format conversion
 │   │   ├── convert_olmocr_parallel.py # Parallel PDF→PNG + JSON conversion
 │   │   ├── convertolmocr_bench.py     # Benchmark data preparation
@@ -146,13 +164,21 @@ Discrete-OCR-Diffusion-Models/
 │   │   ├── check_corrubted_images.py  # Image validation
 │   │   └── extract_all_olmocr.sh      # Download olmOCR-mix-1025 from HuggingFace
 │   ├── inference/
+│   │   ├── predict_ocr.py             # Single-GPU batch benchmark (argparse)
 │   │   ├── predict_ocr_si.py          # Single-image LaViDa inference
 │   │   ├── predict_parallel.py        # Multi-GPU parallel inference worker
-│   │   └── run_parallel.sh            # 4-GPU parallel launcher
+│   │   ├── run_parallel.sh            # 4-GPU parallel launcher
+│   │   └── olmocr_infer.py            # olmOCR AR baseline inference
 │   └── training/
 │       ├── finetune_olmocr.sh         # Fine-tuning launcher
 │       ├── stage2.yaml                # Multi-dataset training composition
 │       └── zero3.json                 # DeepSpeed ZeRO-3 config
+├── assets/                            # Generated visualizations
+│   ├── benchmark_comparison.png       # 3-way bar chart (DiffuQwen vs LaViDa vs olmOCR)
+│   ├── diffuqwen_training_loss.png    # Training + evaluation loss curves
+│   ├── diffuqwen_training_loss_zoomed.png
+│   ├── lavida_jsonl_breakdown.png     # Per-JSONL category results
+│   └── lavida_pooling_comparison.png  # Pooling vs no-pooling results
 └── docs/
     ├── DIFFUQWEN.md                   # DiffuQwen-VL technical details
     ├── LAVIDA.md                      # LaViDa-OCR technical details

@@ -13,7 +13,7 @@ from llava.model.language_model.llada.generate import generate as llada_generate
 from llava.model.language_model.llada.log_likelyhood import get_logits as llada_get_logits
 import json
 import time
-pretrained = "/mnt/lustre-grete/projects/nii00224/mahmoud/Lavida-experiment/LaViDa/checkpoints/lavida-stage2-olmocr-opt-nopool/checkpoint-10750"
+pretrained = "/path/to/lavida-checkpoint"  # e.g. lavida-stage2-olmocr-opt-nopool/checkpoint-10750
 model_name = "llava_llada"
 device = "cuda"
 device_map = "cuda:0"
@@ -34,7 +34,7 @@ prompt_question = conv.get_prompt()
 print(prompt_question)
 vision_kwargs = None
 vision_kwargs = dict(
-    mm_vision_tower="/mnt/lustre-grete/projects/nii00224/mahmoud/Lavida-experiment/LaViDa/lavida-ckpts/google-siglip-so400m-patch14-384",
+    mm_vision_tower="/path/to/google-siglip-so400m-patch14-384",
     mm_resampler_type=None,
     mm_projector_type='mlp2x_gelu',
     mm_hidden_size=1152,
@@ -47,7 +47,7 @@ model.tie_weights()
 model.to(torch.bfloat16)
 
 
-image = Image.open('/mnt/lustre-grete/projects/nii00224/mahmoud/olmOCR-bench/bench_data/images/headers_footers/0a5fbc4e035831182cfa5597151c7690b4dcef88_page_7_processed.png').convert('RGB')
+image = Image.open('/path/to/your/test_image.png')  # Replace with your test image.convert('RGB')
 image_tensor = process_images([image], image_processor, model.config)
 image_tensor = [_image.to(dtype=torch.bfloat16, device=device) for _image in image_tensor]
 

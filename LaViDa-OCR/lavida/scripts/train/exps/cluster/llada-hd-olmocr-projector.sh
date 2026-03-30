@@ -1,15 +1,15 @@
 #!/bin/bash
 ################## PATHS ##################
-cd /mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa
+cd "$(dirname "$0")/../../../.."
 
 # Base Model & Vision Encoder
-LLADA_8B_INSTRUCT="/mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa/lavida-ckpts/lavida-llada-hd"
-VISION_MODEL_VERSION="/mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa/lavida-ckpts/google-siglip-so400m-patch14-384"
+LLADA_8B_INSTRUCT="/path/to/lavida-ckpts/lavida-llada-hd"
+VISION_MODEL_VERSION="/path/to/lavida-ckpts/google-siglip-so400m-patch14-384"
 
-DATA_PATH="/mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa/Lavida_dataset/data/olmocr/olmocr_train_final.json"
-IMG_PATH="/mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa/Lavida_dataset"
+DATA_PATH="/path/to/lavida-dataset/data/olmocr/olmocr_train_final.json"
+IMG_PATH="/path/to/lavida-dataset"
 
-OUTPUT_ROOT="/mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa/checkpoints"
+OUTPUT_ROOT="/path/to/output-checkpoints"
 
 ################## CONFIG ##################
 

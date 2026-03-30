@@ -12,8 +12,8 @@ from llava.constants import IMAGE_TOKEN_INDEX, DEFAULT_IMAGE_TOKEN
 from llava.conversation import conv_templates
 
 # Setup
-# pretrained = "/mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa/lavida-ckpts/lavida-llada-hd"
-pretrained = "/mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa/checkpoints/lavida-stage2-olmocr-full/checkpoint-12500"
+# pretrained = "/path/to/lavida-llada-hd"
+pretrained = "/path/to/lavida-checkpoint"  # e.g. checkpoint-10750
 model_name = "llava_llada"
 device = "cuda"
 device_map = "cuda:0"
@@ -29,7 +29,7 @@ prompt_question = conv.get_prompt()
 
 # Vision config
 vision_kwargs = dict(
-    mm_vision_tower="/mnt/lustre-grete/projects/nii00224/mahmoud/LaViDa/lavida-ckpts/google-siglip-so400m-patch14-384",
+    mm_vision_tower="/path/to/google-siglip-so400m-patch14-384",
     mm_resampler_type=None,
     mm_projector_type='mlp2x_gelu',
     mm_hidden_size=1152,
@@ -48,8 +48,8 @@ model.to(torch.bfloat16)
 print("Model loaded successfully")
 
 # Paths
-base_img_dir = Path("/mnt/lustre-grete/projects/nii00224/mahmoud/olmOCR-bench/bench_data/images")
-base_output_dir = Path("/mnt/lustre-grete/projects/nii00224/mahmoud/olmOCR-bench/bench_data/lavida_outputs_12500")
+base_img_dir = Path("/path/to/olmOCR-bench/bench_data/images")
+base_output_dir = Path("/path/to/lavida_outputs")
 
 categories = ["arxiv_math", "headers_footers", "long_tiny_text", "multi_column", "old_scans", "old_scans_math", "tables"]
 

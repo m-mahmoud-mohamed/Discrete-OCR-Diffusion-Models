@@ -396,14 +396,14 @@ conv_llava_llama_3 = Conversation(
     # tokenizer=safe_load_tokenizer("meta-llama/Meta-Llama-3-8B-Instruct"),
     
     ########################################
-    tokenizer_id="/mnt/lustre-grete/projects/nii00224/mahmoud/Lavida-experiment/LaViDa/lavida-ckpts/Meta-Llama-3-8B-Instruct-tokenizer",
-    tokenizer=safe_load_tokenizer("/mnt/lustre-grete/projects/nii00224/mahmoud/Lavida-experiment/LaViDa/lavida-ckpts/Meta-Llama-3-8B-Instruct-tokenizer"),
+    tokenizer_id="meta-llama/Meta-Llama-3-8B-Instruct",
+    tokenizer=safe_load_tokenizer("meta-llama/Meta-Llama-3-8B-Instruct"),
     stop_token_ids=[128009],
 )
 
 
 #llada_tokenizer = "GSAI-ML/LLaDA-8B-Instruct" ############################
-llada_tokenizer = "/mnt/lustre-grete/projects/nii00224/mahmoud/Lavida-experiment/LaViDa/lavida-ckpts/LLaDA-8B-Instruct-tokenizer"
+llada_tokenizer = "GSAI-ML/LLaDA-8B-Instruct"
 
 conv_llava_llada = Conversation(
     system="You are a helpful language and vision assistant. " "You are able to understand the visual content that the user provides, " "and assist the user with a variety of tasks using natural language.",
@@ -490,8 +490,8 @@ conv_dream = Conversation(
     offset=0,
     sep="<|im_end|>",
     sep_style=SeparatorStyle.LLAMA_3,
-    tokenizer_id="/mnt/lustre-grete/projects/nii00224/mahmoud/Lavida-experiment/LaViDa/lavida-ckpts/Dream-v0-Instruct-7B",
-    tokenizer=AutoTokenizer.from_pretrained("/mnt/lustre-grete/projects/nii00224/mahmoud/Lavida-experiment/LaViDa/lavida-ckpts/Dream-v0-Instruct-7B",trust_remote_code=True),
+    tokenizer_id="Dream-org/Dream-v0-Instruct-7B",
+    tokenizer=AutoTokenizer.from_pretrained("Dream-org/Dream-v0-Instruct-7B",trust_remote_code=True),
     stop_token_ids=[151643],
 )
 
