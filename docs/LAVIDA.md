@@ -100,6 +100,12 @@ Characters like `l`, `I`, `1`, `|` differ by a few pixels. Pooling merges these 
 | Framework | DeepSpeed ZeRO-3 |
 | GPUs | 4× NVIDIA H100 |
 
+### Training Loss
+
+![LaViDa Training Loss](../assets/lavida_training_loss.png)
+
+The training loss drops from ~2.0 to ~0.8 over 10,750 steps, with early spikes subsiding after ~1,000 steps. The minimum recorded loss is **0.0153** at step 8,360. No evaluation loss is available (all data was used for training).
+
 ### Checkpoint
 
 The best OCR checkpoint is `lavida-stage2-olmocr-opt-nopool/checkpoint-10750` (without pooling).

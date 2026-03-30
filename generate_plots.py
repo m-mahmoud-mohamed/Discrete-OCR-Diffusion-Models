@@ -217,6 +217,79 @@ fig.savefig(os.path.join(ASSETS, "lavida_pooling_comparison.png"), dpi=150, bbox
 print(f"Saved: {ASSETS}/lavida_pooling_comparison.png")
 plt.close()
 
+# ──────────────────────────────────────────────
+# 6. LaViDa Training Loss Curve
+# ──────────────────────────────────────────────
+lavida_state_path = "/mnt/lustre-grete/projects/nii00224/mahmoud/Lavida-experiment/LaViDa/checkpoints/lavida-stage2-olmocr-opt-nopool/checkpoint-10750/trainer_state.json"
+
+print("Loading LaViDa trainer_state.json...")
+with open(lavida_state_path) as f:
+    lv_state = json.load(f)
+
+lv_log = lv_state["log_history"]
+lv_train = [e for e in lv_log if "loss" in e and "eval_loss" not in e]
+lv_steps  = [e["step"] for e in lv_train]
+lv_losses = [e["loss"] for e in lv_train]
+
+lv_min_loss = min(lv_losses)
+lv_min_step = lv_steps[lv_losses.index(lv_min_loss)]
+
+lv_window = 50
+lv_smoothed_full = np.convolve(lv_losses, np.ones(lv_window)/lv_window, mode='same')
+lv_residual = np.array(lv_losses) - lv_smoothed_full
+lv_threshold = np.mean(lv_residual) + 5 * np.std(lv_residual)
+lv_spike_mask = lv_residual > lv_threshold
+lv_spike_steps  = [lv_steps[i]  for i in range(len(lv_steps))  if lv_spike_mask[i]]
+lv_spike_losses = [lv_losses[i] for i in range(len(lv_losses)) if lv_spike_mask[i]]
+
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(13, 9))
+fig.suptitle(f'LaViDa-OCR Training — Step 10750 (no pooling)', fontsize=14, fontweight='bold', color='#1a237e')
+
+# Top: full training loss
+ax1.plot(lv_steps, lv_losses, color='#5bc8f5', linewidth=0.4, alpha=0.4, label='Train Loss')
+lv_sm = np.convolve(lv_losses, np.ones(lv_window)/lv_window, mode='valid')
+lv_sm_steps = lv_steps[lv_window-1:]
+ax1.plot(lv_sm_steps, lv_sm, color='#f5a623', linewidth=2.0, label=f'Moving Avg (w={lv_window})')
+ax1.scatter(lv_spike_steps, lv_spike_losses, marker='X', color='#c62828', s=50, zorder=5,
+            label=f'Extreme Spikes ({len(lv_spike_steps)})')
+ax1.axhline(y=lv_min_loss, color='#00c853', linestyle=':', linewidth=1, alpha=0.6)
+ax1.annotate(f'Min: {lv_min_loss:.4f} @ step {lv_min_step}',
+             xy=(lv_min_step, lv_min_loss),
+             xytext=(lv_min_step - 3000, lv_min_loss + 0.3),
+             color='#00c853', fontsize=9, fontweight='bold',
+             arrowprops=dict(arrowstyle='->', color='#00c853', lw=1))
+ax1.set_title('Training Loss (full)', fontsize=11, fontweight='bold', color='#1a237e')
+ax1.set_xlabel('Step', fontsize=10)
+ax1.set_ylabel('Loss', fontsize=10)
+ax1.set_xlim(0, max(lv_steps) + 100)
+ax1.legend(fontsize=9, loc='upper right')
+ax1.grid(True, alpha=0.25)
+
+# Bottom: zoomed (after initial transient)
+zoom_start = 500
+zm = [(s, l) for s, l in zip(lv_steps, lv_losses) if s >= zoom_start]
+zm_steps, zm_losses = zip(*zm)
+ax2.plot(zm_steps, zm_losses, color='#5bc8f5', linewidth=0.5, alpha=0.4, label='Train Loss')
+if len(zm_losses) > lv_window:
+    zm_sm = np.convolve(zm_losses, np.ones(lv_window)/lv_window, mode='valid')
+    ax2.plot(list(zm_steps)[lv_window-1:], zm_sm, color='#f5a623', linewidth=2.0, label=f'Moving Avg (w={lv_window})')
+ax2.axhline(y=lv_min_loss, color='#00c853', linestyle=':', linewidth=1, alpha=0.6)
+ax2.annotate(f'Min: {lv_min_loss:.4f} @ step {lv_min_step}',
+             xy=(lv_min_step, lv_min_loss),
+             xytext=(lv_min_step - 3000, lv_min_loss + 0.15),
+             color='#00c853', fontsize=9, fontweight='bold',
+             arrowprops=dict(arrowstyle='->', color='#00c853', lw=1))
+ax2.set_title('Training Loss (zoomed, steps 500+)', fontsize=11, fontweight='bold', color='#1a237e')
+ax2.set_xlabel('Step', fontsize=10)
+ax2.set_ylabel('Loss', fontsize=10)
+ax2.set_xlim(zoom_start, max(lv_steps) + 100)
+ax2.grid(True, alpha=0.25)
+
+fig.tight_layout()
+fig.savefig(os.path.join(ASSETS, "lavida_training_loss.png"), dpi=150, bbox_inches='tight')
+print(f"Saved: {ASSETS}/lavida_training_loss.png")
+plt.close()
+
 print("\nAll visualizations generated successfully!")
 print(f"Files in {ASSETS}:")
 for f in sorted(os.listdir(ASSETS)):
