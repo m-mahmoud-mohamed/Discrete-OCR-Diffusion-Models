@@ -10,7 +10,7 @@ This experiment fine-tunes LaViDa on ~280,000 documents from the olmOCR training
 
 **Key finding:** Removing pooling transforms LaViDa from non-functional (17.5% Baseline) to competitive (97.0% Baseline) for OCR, but at 50× inference cost.
 
-The full LaViDa framework source code is included in `LaViDa-OCR/lavida/` (forked from [jdchang1/LaViDa](https://github.com/jdchang1/LaViDa)), containing the model definitions, training pipeline, and DeepSpeed configurations.
+The full LaViDa framework source code is included in `LaViDa-OCR/lavida/` (forked from [https://github.com/jacklishufan/LaViDa](https://github.com/jacklishufan/LaViDa)), containing the model definitions, training pipeline, and DeepSpeed configurations.
 
 ---
 
