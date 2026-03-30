@@ -1,0 +1,64 @@
+# DiffuQwen Training Configuration
+# Hyperparameters based on DiffuLLaMA paper and supervisor requirements
+
+# Model paths
+model_path: "/path/to/olmocr-model"  # Base Qwen2.5-VL model (via olmOCR)
+dataset_root: "/path/to/olmocr-dataset"  # olmOCR training dataset
+output_dir: "./outputs/diffuqwen"
+
+# Sequence length
+max_length: 4096
+
+# Training hyperparameters
+batch_size: 4
+gradient_accumulation_steps: 8
+effective_batch_size: 32  # batch_size * gradient_accumulation_steps
+
+# Optimizer
+learning_rate: 2e-4
+weight_decay: 0.01
+warmup_steps: 1000
+max_steps: 50000
+
+# LoRA configuration
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+lora_target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+
+# Diffusion settings
+anneal_steps: 10000  # Causal→bidirectional transition (set to 0 to skip annealing)
+mask_token_id: 151643  # Qwen's <|extra_0|> token
+schedule_type: "linear"  # αₜ = 1 - t
+use_shift: true  # AR-style shift operation (labels[i] = input_ids[i+1])
+use_time_reweight: true  # 1/t loss reweighting from paper
+skip_attention_annealing: false  # Set to true for DiffuLLaMA-7B style (direct bidirectional)
+
+# Vision encoder
+freeze_vision: true
+vision_lora_r: null  # Set to 4 for minimal vision LoRA
+
+# Precision
+bf16: true
+tf32: true
+
+# Checkpointing
+save_steps: 5000
+eval_steps: 1000
+logging_steps: 100
+
+# Data
+max_train_samples: null  # None for all
+max_eval_samples: 500
+num_workers: 4
+
+# Distributed training
+use_deepspeed: false
+deepspeed_config: "configs/ds_config.json"
+
+# Reproducibility
+seed: 42

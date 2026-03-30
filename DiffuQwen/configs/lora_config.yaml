@@ -1,0 +1,67 @@
+# LoRA Configuration for DiffuQwen-VL
+# Based on DiffuLLaMA adaptation method
+
+# LoRA hyperparameters
+r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+
+# Target modules (attention layers only)
+target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+
+# Task type
+task_type: "CAUSAL_LM"
+
+# Bias handling
+bias: "none"
+
+# Modules to save (in addition to LoRA)
+modules_to_save: null
+
+# Initialization
+init_lora_weights: true
+
+# Fan-in/fan-out handling for specific layers
+fan_in_fan_out: false
+
+# Merge weights during inference
+inference_mode: false
+
+# ═══════════════════════════════════════════════════════════════
+# Alternative configurations for experimentation
+# ═══════════════════════════════════════════════════════════════
+
+# Minimal LoRA (faster training, less capacity)
+minimal:
+  r: 8
+  lora_alpha: 16
+  lora_dropout: 0.1
+  target_modules:
+    - q_proj
+    - v_proj
+
+# Full LoRA (maximum capacity)
+full:
+  r: 32
+  lora_alpha: 64
+  lora_dropout: 0.05
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+
+# Vision LoRA (if unfreezing vision encoder)
+vision:
+  r: 4
+  lora_alpha: 8
+  lora_dropout: 0.0
+  target_modules:
+    - qkv  # ViT attention
