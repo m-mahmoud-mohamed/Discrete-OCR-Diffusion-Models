@@ -153,6 +153,16 @@ The inference script loads the LaViDa model with diffusion generation:
 - **Warmup:** First generation with `step_ratio=1.0` (64 steps) 
 - **Main:** Subsequent generations with `step_ratio=0.4` (~25 steps) for speed
 
+### Single-GPU Batch (olmOCR-bench categories)
+```bash
+python inference/predict_ocr.py \
+    --checkpoint  /path/to/lavida-checkpoint \
+    --vision_tower /path/to/google-siglip-so400m-patch14-384 \
+    --bench_images /path/to/olmOCR-bench/bench_data/images \
+    --output_dir  /path/to/outputs
+```
+Iterates all 7 benchmark categories on one GPU, saving one `.md` file per image. Resume-safe (skips existing outputs).
+
 ### Parallel Benchmark (4 GPUs)
 ```bash
 bash inference/run_parallel.sh
