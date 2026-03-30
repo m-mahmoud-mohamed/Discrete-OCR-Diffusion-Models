@@ -1,8 +1,8 @@
 # Exploring Discrete Diffusion for Vision-Language Document Understanding
 
-> **Master's Seminar Project** — Georg-August-Universität Göttingen  
+> **Seminar:** Selected Topics in Data Science  
 > **Author:** Mahmoud Abdellahi  
-> **Supervisors:** Tianyu Yang, Terry Ruas  
+> **Supervisor:** Tianyu Yang  
 > **Semester:** Winter 2025/26
 
 ---
@@ -280,7 +280,7 @@ The benchmark also includes `long_tiny_text` and sub-categories (headers_footers
   title        = {Exploring Discrete Diffusion for Vision-Language Document Understanding},
   year         = {2026},
   institution  = {Georg-August-Universität Göttingen},
-  note         = {Master's Seminar Project, Winter 2025/26}
+  note         = {Selected Topics in Data Science, Winter 2025/26}
 }
 ```
 
